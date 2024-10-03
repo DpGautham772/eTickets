@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using eTickets.Models.Data; // Namespace where your AppDbContext class is defined
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+// Register AppDbContext with the connection string from appsettings.json
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(builder.Configuration.GetConnectionString("DefaultConnectionString"),
+    ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("DefaultConnectionString"))));
+
 
 var app = builder.Build();
 
