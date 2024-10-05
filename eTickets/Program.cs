@@ -1,10 +1,16 @@
 using Microsoft.EntityFrameworkCore;
-using eTickets.Models.Data; // Namespace where your AppDbContext class is defined
+using eTickets.Models.Data;
+using eTickets.Data;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
+using eTickets.Data.Services; // Namespace where your AppDbContext class is defined
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+//Services configuration
+builder.Services.AddScoped<IActorsService, ActorsService>();
 
 // Register AppDbContext with the connection string from appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -32,5 +38,8 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+//seed database
+AppDbInitializer.Seed(app);
 
 app.Run();
