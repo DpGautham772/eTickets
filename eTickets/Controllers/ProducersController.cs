@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using eTickets.Data.Services;
 using eTickets.Models.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,11 @@ namespace eTickets.Controllers
     public class ProducersController : Controller
     {
         private readonly ILogger<ProducersController> _logger;
-        private readonly AppDbContext _context;
+        private readonly IProducersService _service;
 
-        public ProducersController(AppDbContext context, ILogger<ProducersController> logger)
+        public ProducersController(IProducersService service, ILogger<ProducersController> logger)
         {
-            _context = context;
+            _service = service;
             _logger = logger;
         }
         // public ProducersController(ILogger<ProducersController> logger)
@@ -30,7 +31,7 @@ namespace eTickets.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var allProducers = await _context.Producers.ToListAsync();
+            var allProducers = await _service.GetAllAsync();
             return View(allProducers);
         }
 

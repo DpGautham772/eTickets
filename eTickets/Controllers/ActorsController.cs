@@ -32,7 +32,7 @@ namespace eTickets.Controllers
         [Route("Index")]
         public async Task<IActionResult> Index()
         {
-            var data = await _service.GetAll();
+            var data = await _service.GetAllAsync();
             return View(data);
         }
 
@@ -45,7 +45,8 @@ namespace eTickets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("FullName, ProfilePictureURL, Bio")] Actor actor)
+        [Route("Create")]
+        public async Task<IActionResult> Create([Bind("FullName,ProfilePictureURL,Bio")] Actor actor)
         {
             // Check if model state is valid
             if (!ModelState.IsValid)
@@ -59,6 +60,76 @@ namespace eTickets.Controllers
             // Redirect to the Index page (list of actors) after successful creation
             return RedirectToAction(nameof(Index));
         }
+
+        //Get: Actors/Details/1
+        [Route("Details/{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+
+            if (actorDetails == null) { return View("NotFound"); }
+            return View(actorDetails);
+        }
+
+        [Route("Edit")]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+
+            if (actorDetails == null) return View("NotFound");
+            return View(actorDetails);
+        }
+
+        [HttpPost]
+        [Route("Edit")]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FullName,ProfilePictureURL,Bio")] Actor actor)
+        {
+            // Check if model state is valid
+            if (!ModelState.IsValid)
+            {
+                return View(actor);
+            }
+
+
+            // Save actor to the database (assuming your _service handles async)
+            await _service.UpdateAsync(id, actor);  // Ensure this is awaited
+
+            // Redirect to the Index page (list of actors) after successful creation
+            return RedirectToAction(nameof(Index));
+
+            // If invalid, return the same view with errors
+
+
+        }
+
+
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+
+            if (actorDetails == null) return View("NotFound");
+            return View(actorDetails);
+        }
+
+        [HttpPost]
+        [Route("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var actorDetails = await _service.GetByIdAsync(id);
+            if (actorDetails == null) return View("NotFound");
+
+            await _service.DeleteAsync(id);
+
+
+            // Redirect to the Index page (list of actors) after successful creation
+            return RedirectToAction(nameof(Index));
+
+            // If invalid, return the same view with errors
+
+
+        }
+
 
 
 

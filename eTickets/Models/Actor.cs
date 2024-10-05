@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
 using System.Threading.Tasks;
+using eTickets.Data.Base;
+using Microsoft.Extensions.Options;
 
 namespace eTickets.Models
 {
-    public class Actor
+    public class Actor : IEntityBase
     {
         [Key]
         public int Id { get; set; }
@@ -26,6 +30,8 @@ namespace eTickets.Models
         public string Bio { get; set; }
 
         //Relationiship
-        public List<Actor_Movie> Actor_Movies { get; set; }
+
+        public List<Actor_Movie> Actor_Movies { get; set; } = new List<Actor_Movie>();
+
     }
 }

@@ -11,6 +11,8 @@ builder.Services.AddControllersWithViews();
 
 //Services configuration
 builder.Services.AddScoped<IActorsService, ActorsService>();
+builder.Services.AddScoped<IProducersService, ProducersService>();
+
 
 // Register AppDbContext with the connection string from appsettings.json
 builder.Services.AddDbContext<AppDbContext>(options =>

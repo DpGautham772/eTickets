@@ -26,6 +26,12 @@ namespace eTickets.Models.Data
 
             base.OnModelCreating(modelBuilder);
         }
+
+        internal async Task<Actor> FirstOrDefaultAsync(Func<object, bool> value)
+        {
+            throw new NotImplementedException();
+        }
+
         public DbSet<Actor> Actors { get; set; }
         public DbSet<Movie> Movies { get; set; }
         public DbSet<Actor_Movie> Actors_Movies { get; set; }
