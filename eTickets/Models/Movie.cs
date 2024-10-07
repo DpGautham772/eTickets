@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using eTickets.Data.Base;
 using eTickets.Models.Data;
 
 namespace eTickets.Models
 {
-    public class Movie
+    public class Movie : IEntityBase
     {
         [Key]
         public int Id { get; set; }
@@ -21,7 +22,7 @@ namespace eTickets.Models
         public MovieCategory MovieCategory { get; set; }
 
         //Relationiship
-        public List<Actor_Movie> Actor_Movies { get; set; }
+        public List<Actor_Movie> Actor_Movies { get; set; } = new List<Actor_Movie>();
 
         //Cinema
         public int CinemaId { get; set; }

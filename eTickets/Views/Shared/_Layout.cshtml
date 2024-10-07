@@ -50,6 +50,22 @@
                                 type="submit"><i class="bi bi-search"></i></button>
                         </form>
                     </ul>
+                    <ul class="navbar-nav">
+                        @await Component.InvokeAsync("ShoppingCartSummary")
+                    </ul>
+                    @*user profile section*@
+                    <div class="dropdown">
+                        <button class="btn btn-outline-success dropdown-toggle" type="button" id="profile-btn"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-square"></i> Hello User
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="profile-btn">
+                            <li>
+                                <a class="dropdown-item" asp-controller="Orders" asp-action="Index"><i
+                                        class="bi bi-list"></i> Orders </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </nav>
@@ -68,7 +84,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Script", required: false)
+    @* @RenderSection("script", required: false) *@
 </body>
 
 </html>
