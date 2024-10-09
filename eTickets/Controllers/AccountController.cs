@@ -99,8 +99,15 @@ namespace eTickets.Controllers
             if (newUserResponse.Succeeded)
             {
                 await _userManager.AddToRoleAsync(newuser, UserRoles.User);
+                return RedirectToAction("Login", "Account");
             }
-            return View("RegisterCompleted");
+            foreach (var error in newUserResponse.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+
+            return View(registerVM);
+
 
         }
 
